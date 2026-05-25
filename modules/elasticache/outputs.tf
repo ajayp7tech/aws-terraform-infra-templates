@@ -1,1 +1,4 @@
-output "primary_endpoint" { value = aws_elasticache_replication_group.main.primary_endpoint_address }
+output "primary_endpoint" {
+  description = "Primary endpoint address"
+  value       = aws_elasticache_replication_group.main.primary_endpoint_address
+}

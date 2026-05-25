@@ -1,13 +1,18 @@
 terraform {
   required_providers {
-    aws = { source = "hashicorp/aws"; version = "~> 5.0" }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
   }
 }
+
 resource "aws_db_subnet_group" "main" {
   name       = "${var.cluster_identifier}-subnet-group"
   subnet_ids = var.subnet_ids
   tags       = var.tags
 }
+
 resource "aws_rds_cluster" "main" {
   cluster_identifier      = var.cluster_identifier
   engine                  = "aurora-postgresql"
@@ -22,6 +27,7 @@ resource "aws_rds_cluster" "main" {
   skip_final_snapshot     = true
   tags                    = var.tags
 }
+
 resource "aws_rds_cluster_instance" "main" {
   count              = var.instance_count
   identifier         = "${var.cluster_identifier}-${count.index + 1}"

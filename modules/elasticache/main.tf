@@ -1,13 +1,18 @@
 terraform {
   required_providers {
-    aws = { source = "hashicorp/aws"; version = "~> 5.0" }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
   }
 }
+
 resource "aws_elasticache_subnet_group" "main" {
   name       = "${var.cluster_id}-subnet-group"
   subnet_ids = var.subnet_ids
   tags       = var.tags
 }
+
 resource "aws_elasticache_replication_group" "main" {
   replication_group_id       = var.cluster_id
   description                = "Redis cluster for ${var.cluster_id}"
