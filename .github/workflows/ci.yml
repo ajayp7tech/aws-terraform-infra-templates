@@ -25,17 +25,17 @@ jobs:
       - name: Validate VPC module
         run: |
           cd modules/vpc
-          terraform init -backend=false
+          terraform init -backend=false -input=false
           terraform validate
 
       - name: Validate RDS Aurora module
         run: |
           cd modules/rds-aurora
-          terraform init -backend=false
+          terraform init -backend=false -input=false
           terraform validate
 
       - name: Validate ElastiCache module
         run: |
           cd modules/elasticache
-          terraform init -backend=false
+          terraform init -backend=false -input=false
           terraform validate
