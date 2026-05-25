@@ -1,0 +1,41 @@
+name: Terraform CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+
+      - name: Validate VPC module
+        run: |
+          cd modules/vpc
+          terraform init -backend=false
+          terraform validate
+
+      - name: Validate RDS Aurora module
+        run: |
+          cd modules/rds-aurora
+          terraform init -backend=false
+          terraform validate
+
+      - name: Validate ElastiCache module
+        run: |
+          cd modules/elasticache
+          terraform init -backend=false
+          terraform validate
